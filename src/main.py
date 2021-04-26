@@ -62,6 +62,8 @@ def _filter_nonessential(subsets, essential):
 def compare(sum, error, weights, occurrences):
     lower_bound = sum * (1 - float(error))
     upper_bound = sum * (1 + float(error))
+    print(lower_bound)
+    print(upper_bound)
 
     multiplied_weights = _list_multiply(weights, occurrences)
 

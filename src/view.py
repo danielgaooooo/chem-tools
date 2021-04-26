@@ -78,9 +78,6 @@ def submit(event):
     else:
         raise SyntaxError('require either .xlsx or .txt file')
 
-    print(weights)
-    print(occurrences)
-
     results = compare(sumInput, errorInput, weights, occurrences)
     resultsStringBuilder = ''
 
