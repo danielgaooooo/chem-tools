@@ -6,22 +6,22 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return '''
-    Welcome to Chem Tools.\n
-    \n
-    Directions:\n
-    - Enter the desired total sum (ex. 16.41)\n
-    - Enter the desired error (ex. for 1 percent error, enter 0.01)\n
-    - Enter the individual parts, separated by a space (ex. 12.33 12.33 9.443 3.9 4)\n
-    \n
-    When you click "Submit" the program will attempt to find all possible combinations of parts that make the total sum, within the desired error.\n
-    \n
-    For example, if you input:\n
-    - Total Sum = 16.41\n
-    - Error = 0.01\n
-    - Parts = 12.33 12.33 9.443 3.9 4\n
-    \n
-    The program will try all combinations of "Parts" that sum to 16.41, within 1 percent error (16.2459 to 16.5741)\n
-    \n
+    Welcome to Chem Tools.<br>
+    <br>
+    Directions:<br>
+    - Enter the desired total sum (ex. 16.41)<br>
+    - Enter the desired error (ex. for 1 percent error, enter 0.01)<br>
+    - Enter the individual parts, separated by a space (ex. 12.33 12.33 9.443 3.9 4)<br>
+    <br>
+    When you click "Submit" the program will attempt to find all possible combinations of parts that make the total sum, within the desired error.<br>
+    <br>
+    For example, if you input:<br>
+    - Total Sum = 16.41<br>
+    - Error = 0.01<br>
+    - Parts = 12.33 12.33 9.443 3.9 4<br>
+    <br>
+    The program will try all combinations of "Parts" that sum to 16.41, within 1 percent error (16.2459 to 16.5741)<br>
+    <br>
     <form action="/submit" method="post">
         <label for="num1">Total Sum:</label>
         <input type="text" id="num1" name="num1"><br><br>
@@ -50,10 +50,10 @@ def submit():
         return "<h1>Error: Please enter valid numbers!</h1>"
 
     return f'''
-    <h1>Form Submitted!</h1>
-    <p>Number 1: {num1}</p>
-    <p>Number 2: {num2}</p>
-    <p>List of Numbers: {num3_list}</p>
+    <h1>Double check your input. Are the following values correct?</h1>
+    <p>Total Sum: {num1}</p>
+    <p>Error (between 0 and 1): {num2}</p>
+    <p>Parts: {num3_list}</p>
     '''
 
 if __name__ == '__main__':
