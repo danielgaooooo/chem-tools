@@ -7,7 +7,6 @@ app = Flask(__name__)
 def index():
     return '''
     <h1>Welcome to Chem Tools.</h1><br>
-    <br>
     <h2>Directions</h2>
     <p>
     - Enter the desired total sum (ex. 16.41)<br>
@@ -80,6 +79,7 @@ def confirm():
         return redirect(url_for('index'))
     elif user_response == 'confirm':
         # Redirect to the final page if user confirms
+        print(f'{request.form["num1"]}, {request.form["num2"]}, {num3_list_str}\n')
         return redirect(url_for('final', num1=request.form['num1'], num2=request.form['num2'], num3_list=num3_list_str))
 
 @app.route('/final')
