@@ -66,7 +66,7 @@ def submit():
 
     # Pass the submitted values to the confirmation page
     num3_list_str = ' '.join(map(str, num3_list))
-    return render_template('confirm.html', num1=num1, num2=num2, num3_list=num3_list_str, num3_len=len(num3_input), num3_pow=pow(2, len(num3_input)))
+    return render_template('confirm.html', num1=num1, num2=num2, num3_list=num3_list_str, num3_len=len(num3_list), num3_pow=pow(2, len(num3_list)))
 
 @app.route('/confirm', methods=['POST'])
 def confirm():
