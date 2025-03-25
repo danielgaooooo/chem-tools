@@ -83,6 +83,8 @@ def final():
     # Get values from query string (passed from confirmation page)
     num1 = float(request.args.get('num1'))
     num2 = float(request.args.get('num2'))
+    for x in list(request.args.get('num3_list')):
+        print(x)
     num3_list = [float(x) for x in list(request.args.get('num3_list'))]
 
     # Call the function with the values
