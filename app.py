@@ -70,24 +70,20 @@ def submit():
 def confirm():
     # Handle the confirmation form submission
     user_response = request.form['confirmation']
-
-    # Pass the list as a space-separated string
-    num3_list_str = type(' '.join(map(str, request.form['num3_list'].split())))
     
     if user_response == 'edit':
         # Redirect back to the form if user wants to edit
         return redirect(url_for('index'))
     elif user_response == 'confirm':
         # Redirect to the final page if user confirms
-        return f'{request.form["num1"]}, {request.form["num2"]}, {num3_list_str}\n'
-        # return redirect(url_for('final', num1=request.form['num1'], num2=request.form['num2'], num3_list=num3_list_str))
+        return redirect(url_for('final', num1=request.form['num1'], num2=request.form['num2'], num3_list=request.form['num3_list']))
 
 @app.route('/final')
 def final():
     # Get values from query string (passed from confirmation page)
     num1 = float(request.args.get('num1'))
     num2 = float(request.args.get('num2'))
-    num3_list = list(map(float, request.args.get('num3_list').split()))
+    num3_list = list(request.args.get('num3_list'))
 
     # Call the function with the values
     final_vals = compare(num1, num2, num3_list)
