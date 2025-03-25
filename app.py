@@ -64,7 +64,8 @@ def submit():
     '''
 
     # Pass the submitted values to the confirmation page
-    return render_template('confirm.html', num1=num1, num2=num2, num3_list=num3_list)
+    num3_list_str = ' '.join(map(str, num3_list))
+    return render_template('confirm.html', num1=num1, num2=num2, num3_list=num3_list_str)
 
 @app.route('/confirm', methods=['POST'])
 def confirm():
@@ -83,10 +84,9 @@ def final():
     # Get values from query string (passed from confirmation page)
     num1 = float(request.args.get('num1'))
     num2 = float(request.args.get('num2'))
-    for x in list(request.args.get('num3_list')):
-        print(x)
-    num3_list = [float(x) for x in list(request.args.get('num3_list'))]
-
+    num3_list_str = request.args.get('num3_list')
+    num3_list = list(map(float, num3_list_str.split()))
+    
     # Call the function with the values
     final_vals = compare(num1, num2, num3_list)
 
