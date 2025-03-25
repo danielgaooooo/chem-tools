@@ -53,7 +53,7 @@ def find_subsets(arr, upper, lower):
     result = set()
     
     # Create a ThreadPoolExecutor to run the tasks concurrently
-    with concurrent.futures.ThreadPoolExecutor() as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
         # Submit tasks to the thread pool for each subset
         futures = [
             executor.submit(process_subset, i, arr, upper, lower, result)
