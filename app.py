@@ -75,7 +75,7 @@ def confirm():
         return redirect(url_for('index'))
     elif user_response == 'confirm':
         # Redirect to the final page if user confirms
-        return render_template('final.html', num1=request.form['num1'], num2=request.form['num2'], num3_list=request.form['num3_list'])
+        return redirect(url_for('final', num1=request.form['num1'], num2=request.form['num2'], num3_list=request.form['num3_list']))
 
 @app.route('/final')
 def final():
