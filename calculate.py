@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+import concurrent.futures
+
 
 def within_range(i, upper, lower):
     '''
@@ -35,17 +37,32 @@ def sum_subsets(sets, n, upper, lower, result) :
             if (x[i] == 1) :
                 temp_list.append(sets[i]); 
         result.add(tuple(temp_list))
-  
+
+def process_subset(i, arr, upper, lower, result):
+    # This function will encapsulate the call to sum_subsets for each subset index i
+    sum_subsets(arr, i, upper, lower, result)
+
 def find_subsets(arr, upper, lower):
     '''
-    Function to find the subsets with sum within upper/lower bounds
+    Function to find the subsets with sum within upper/lower bounds using multithreading
     '''
-    # Calculate the total no. of subsets 
+    # Calculate the total no. of subsets
     x = pow(2, len(arr))
-    # Run loop till total no. of subsets and call the function for each subset
+    
+    # Initialize a set to store the results
     result = set()
-    for i in range(1, x):
-        sum_subsets(arr, i, upper, lower, result)
+    
+    # Create a ThreadPoolExecutor to run the tasks concurrently
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        # Submit tasks to the thread pool for each subset
+        futures = [
+            executor.submit(process_subset, i, arr, upper, lower, result)
+            for i in range(1, x)
+        ]
+        
+        # Wait for all tasks to complete
+        concurrent.futures.wait(futures)
+    
     return result
 
 def _filter_nonessential(subsets, essential):
@@ -61,8 +78,6 @@ def compare(sum_total, error, weights):
     '''
     lower_bound = sum_total * (1 - float(error))
     upper_bound = sum_total * (1 + float(error))
-    print(lower_bound)
-    print(upper_bound)
 
     subsets = find_subsets(weights, upper_bound, lower_bound)
 
