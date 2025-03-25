@@ -89,11 +89,12 @@ def final():
     
     # Call the function with the values
     final_vals = compare(num1, num2, num3_list)
+    final_vals_str = '\n'.join(map(str, final_vals))
 
     # Display the final values
     return f'''
     <h1>Final Values:</h1>
-    {final_vals}</p>
+    {final_vals_str}</p>
     '''
 
 if __name__ == '__main__':
