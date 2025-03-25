@@ -10,6 +10,9 @@
     <p>Number 1: {{ num1 }}</p>
     <p>Number 2: {{ num2 }}</p>
     <p>List of Numbers: {{ num3_list }}</p>
+    <br><br>
+    <h3>Note:</h3>
+    <p>You passed in {{ num3_len }} numbers, which will require {{ num3_pow }} iterations.</p>
 
     <form action="/confirm" method="POST">
         <input type="hidden" name="num1" value="{{ num1 }}">

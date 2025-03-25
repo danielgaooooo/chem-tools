@@ -66,7 +66,7 @@ def submit():
 
     # Pass the submitted values to the confirmation page
     num3_list_str = ' '.join(map(str, num3_list))
-    return render_template('confirm.html', num1=num1, num2=num2, num3_list=num3_list_str)
+    return render_template('confirm.html', num1=num1, num2=num2, num3_list=num3_list_str, num3_len=len(num3_input), num3_pow=pow(2, len(num3_input)))
 
 @app.route('/confirm', methods=['POST'])
 def confirm():
@@ -99,8 +99,12 @@ def final():
     return f'''
     <h1>Elapsed time:</h1>
     {elapsed} seconds<br><br>
-    <h1>Final Values:</h1><br>
+    <h1>Final Values:</h1>
     {final_vals_str}</p>
+    <br>
+    <form action="/" method="get">
+        <input type="submit" value="Go back">
+    </form>
     '''
 
 if __name__ == '__main__':
