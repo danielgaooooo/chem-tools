@@ -1,9 +1,11 @@
 from flask import Flask
+from calculate import main
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
+    main()
     return "Hello, Railway! Your Flask app is running."
 
 if __name__ == '__main__':

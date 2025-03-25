@@ -73,3 +73,16 @@ def compare(sum, error, weights, occurrences):
     filtered_subsets = _filter_nonessential(subsets, weights[0])
 
     return filtered_subsets
+
+# Receives a string, analyzes it, and displays the results
+def main():
+    sumInput = 4.4
+    errorInput = 0.01
+
+    weights = [1.1, 3.3, 2.2 ,4.4, 5.5]
+    occurrences = [1, 2, 3, 4, 1]
+
+    print(compare(sumInput, errorInput, weights, occurrences))
+
+if __name__ == "__main__":
+    main()
