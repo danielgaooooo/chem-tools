@@ -6,22 +6,22 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return '''
-    Welcome to Chem Tools.
-
-    Directions:
-    - Enter the desired total sum (ex. 16.41)
-    - Enter the desired error (ex. for 1 percent error, enter 0.01)
-    - Enter the individual parts, separated by a space (ex. 12.33 12.33 9.443 3.9 4)
-
-    When you click "Submit" the program will attempt to find all possible combinations of parts that make the total sum, within the desired error.
-
-    For example, if you input:
-    - Total Sum = 16.41
-    - Error = 0.01
-    - Parts = 12.33 12.33 9.443 3.9 4
-
-    The program will try all combinations of "Parts" that sum to 16.41, within 1 percent error (16.2459 to 16.5741)
-
+    Welcome to Chem Tools.\n
+    \n
+    Directions:\n
+    - Enter the desired total sum (ex. 16.41)\n
+    - Enter the desired error (ex. for 1 percent error, enter 0.01)\n
+    - Enter the individual parts, separated by a space (ex. 12.33 12.33 9.443 3.9 4)\n
+    \n
+    When you click "Submit" the program will attempt to find all possible combinations of parts that make the total sum, within the desired error.\n
+    \n
+    For example, if you input:\n
+    - Total Sum = 16.41\n
+    - Error = 0.01\n
+    - Parts = 12.33 12.33 9.443 3.9 4\n
+    \n
+    The program will try all combinations of "Parts" that sum to 16.41, within 1 percent error (16.2459 to 16.5741)\n
+    \n
     <form action="/submit" method="post">
         <label for="num1">Total Sum:</label>
         <input type="text" id="num1" name="num1"><br><br>
