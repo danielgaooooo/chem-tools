@@ -89,16 +89,16 @@ def final():
     num3_list = list(map(float, num3_list_str.split()))
     
     # Call the function with the values
-    start = time.time()
+    start = time.perf_counter()
     final_vals = compare(num1, num2, num3_list)
-    end = time.time()
-    elapsed = end - start
+    end = time.perf_counter()
+    elapsed = 1000 * (end - start)
 
     # Display the final values
     final_vals_str = '<br>'.join(map(str, final_vals))
     return f'''
     <h1>Elapsed time:</h1>
-    {elapsed} seconds<br><br>
+    {elapsed} milliseconds<br><br>
     <h1>Final Values:</h1>
     {final_vals_str}</p>
     <br>
