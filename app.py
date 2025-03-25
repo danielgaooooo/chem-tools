@@ -72,7 +72,7 @@ def confirm():
     user_response = request.form['confirmation']
 
     # Pass the list as a space-separated string
-    num3_list_str = 'poop' + ' '.join(map(str, request.form['num3_list'].split()))
+    num3_list_str = type(' '.join(map(str, request.form['num3_list'].split())))
     
     if user_response == 'edit':
         # Redirect back to the form if user wants to edit
