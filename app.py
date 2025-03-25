@@ -83,7 +83,7 @@ def final():
     # Get values from query string (passed from confirmation page)
     num1 = float(request.args.get('num1'))
     num2 = float(request.args.get('num2'))
-    num3_list = list(request.args.get('num3_list'))
+    num3_list = [float(x) for x in list(request.args.get('num3_list'))]
 
     # Call the function with the values
     final_vals = compare(num1, num2, num3_list)
