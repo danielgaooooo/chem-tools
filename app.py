@@ -9,7 +9,6 @@ def index():
     <h1>Welcome to Chem Tools.</h1><br>
     <br>
     <h2>Directions</h2>
-    <br>
     <p>
     - Enter the desired total sum (ex. 16.41)<br>
     - Enter the desired error (ex. for 1 percent error, enter 0.01)<br>
@@ -21,7 +20,6 @@ def index():
     - Total Sum = 16.41<br>
     - Error = 0.01<br>
     - Parts = 12.33 12.33 9.443 3.9 4<br>
-    <br>
     The program will try all combinations of "Parts" that sum to 16.41, within 1 percent error (16.2459 to 16.5741)<br>
     <br>
     </p>
@@ -60,6 +58,10 @@ def submit():
     - Enter the desired error (ex. for 1 percent error, enter 0.01)<br>
     - Enter the individual parts, separated by a space (ex. 12.33 12.33 9.443 3.9 4)<br>
     <br>
+    
+    <form action="/" method="get">
+        <input type="submit" value="Go back">
+    </form>
     '''
 
     # Pass the submitted values to the confirmation page
