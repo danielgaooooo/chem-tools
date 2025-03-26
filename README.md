@@ -35,8 +35,8 @@ python3 main.py ~/Downloads/data/weights.txt
 ```
 
 ## Formatting Your Data
-The program expects your data file to be formatted in a certain way. That 
-format is:
+The program expects your data file to be formatted in a certain way. See `example.txt` 
+for an example. That format is:
 ```
 SUM
 ERROR
