@@ -35,20 +35,25 @@ python3 main.py ~/Downloads/data/weights.txt
 ```
 
 ## Formatting Your Data
-The program expects your data file to be formatted in a certain way. See `example.txt` 
-for an example. That format is:
+The program expects your data file to be formatted in a certain way. The file 
+should have 5 lines total.  
+1. Total sum (Number)
+2. Error (Number, between 0 and 1)
+3. Individual weights, space-separated (List-of Numbers)
+4. Maximum counts of each individual weight, space-separated (List-of Numbers)
+4. Required weights (List-of Numbers)
+
+#### Example
+In the below example, I'm requesting:
+- a **total sum** of 20
+- an **error** of 1%
+- **weights** of 1, 2, 4, 6, and 8
+- **max weight counts** of one 1, two 2s, one 4, three 6s, and two 8s
+- **required weights** of 1 and 4
 ```
-SUM
-ERROR
-LIST OF NUMBERS
-```
-where `SUM` is a number, `ERROR` is a number between 0 and 1, and `LIST OF NUMBERS` 
-represents the weights that could add up to `SUM`. An example of a valid data 
-file is:
-```
-10
+20
 0.01
-1 2 3 4 5 6 7 8 9 10
+1 2 4 6 8
+1 2 1 3 2
+1 4
 ```
-where the desired sum is 10, within a 1% error, with possible weights of 1, 2, 
-3, 4, 5, 6, 7, 8, 9, and 10.

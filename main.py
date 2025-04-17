@@ -37,6 +37,20 @@ def within_range(i, upper, lower):
     '''
     return lower <= i <= upper
 
+def duplicate_weights(all_weights, counts):
+    '''
+    Duplicate each weight in all_weights by counts
+    ex. for the following:
+    - all_weights = [1, 2, 3, 4]
+    - counts = [2, 1, 2, 1]
+    this function will return:
+    [1, 1, 2, 3, 3, 4]
+    '''
+    new_weights = []
+    for weight, count in zip(all_weights, counts):
+        new_weights.extend([weight] * count)
+    return new_weights
+
 # ============= https://www.geeksforgeeks.org/perfect-sum-problem/ ============
 def sum_subsets(sets, n, upper, lower, result) :
     '''
@@ -86,14 +100,18 @@ def find_subsets(arr, upper, lower):
     print('\n')  # Move to a new line after completion
     return result
 
-def _filter_nonessential(subsets, essential):
-    copy_subsets = []
-    for subset in subsets:
-        if essential in subset:
-            copy_subsets.append(subset)
-    return copy_subsets
+def filter_by_rule(subsets, required):
+    '''
+    filters subsets to exclude those without the required numbers
+    '''
+    filtered_subsets = set()
+    for s in subsets:
+        if set(required).issubset(s):
+            filtered_subsets.add(s)
+    return filtered_subsets
+                
 
-def compare(sum_total, error, weights):
+def compare(sum_total, error, weights, req_weights):
     '''
     finds all possible combinations of weights that sum to sum_total within err
     '''
@@ -102,13 +120,8 @@ def compare(sum_total, error, weights):
 
     subsets = find_subsets(weights, upper_bound, lower_bound)
 
-    # the first weight MUST be used
-    filtered_subsets = _filter_nonessential(subsets, weights[0])
-
-    return filtered_subsets
-
-
-
+    # filter by rules, ex. required vs. optional weights, counts, etc.
+    return filter_by_rule(subsets, req_weights)
 
 def check_positive(value):
     '''Check if the value is a positive float.'''
@@ -124,7 +137,7 @@ def check_between_0_and_1(value):
         raise argparse.ArgumentTypeError(f'{value} must be between 0 and 1.')
     return num
 
-def check_positive_list(value):
+def check_positive_floats(value):
     '''Check if all values in the space-separated list are positive floats.'''
     try:
         num_list = list(map(float, value.split()))
@@ -135,21 +148,45 @@ def check_positive_list(value):
         raise argparse.ArgumentTypeError(f'{value} must be a space-separated '
                                          f'list of positive numbers.') from exc
 
+def check_positive_ints(value):
+    '''Check if all values in the space-separated list are positive floats.'''
+    try:
+        num_list = list(map(int, value.split()))
+        if any(num <= 0 for num in num_list):
+            raise ValueError
+        return num_list
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError(f'{value} must be a space-separated '
+                                         f'list of positive numbers.') from exc
+
 def parse_file(file_path):
-    '''Parse the input file to extract num1, num2, and num_list.'''
+    '''
+    Parse the input file to extract:
+    - total_sum
+    - error
+    - all_weights
+    - counts
+    - req_weights
+    '''
     with open(file_path, 'r', encoding='utf-8') as file:
         # Read lines and remove leading/trailing whitespaces
         lines = [line.strip() for line in file.readlines()]
 
-        # Expected to have three lines: num1, num2, num_list
-        if len(lines) != 3:
-            raise ValueError('Input file must contain exactly 3 lines.')
+        # Expected to have 5 lines
+        if len(lines) != 5:
+            raise ValueError('Input file must contain exactly 5 lines.')
 
-        num1 = check_positive(lines[0])  # First line: num1
-        num2 = check_between_0_and_1(lines[1])  # Second line: num2
-        num_list = check_positive_list(lines[2])  # Third line: num_list
+        total_sum = check_positive(lines[0])
+        error = check_between_0_and_1(lines[1])
+        all_weights = check_positive_floats(lines[2])
+        counts = check_positive_ints(lines[3])
+        req_weights = check_positive_floats(lines[4])
 
-        return num1, num2, num_list
+        if len(all_weights) != len(counts):
+            raise argparse.ArgumentTypeError(f'Length of all_weights (line 3) and counts (line 4) must be the same. Current all_weights length: {len(all_weights)}, counts length: {len(counts)}')
+
+        all_weights = duplicate_weights(all_weights, counts)
+        return total_sum, error, all_weights, req_weights
 
 def get_arguments():
     '''Parse input file argument'''
@@ -167,13 +204,13 @@ def main():
     '''
     execute perfect sum problem and print results
     '''
-    total_sum, error, parts = get_arguments()
+    total_sum, error, all_weights, req_weights = get_arguments()
 
     lower_bound = total_sum * (1 - float(error))
     upper_bound = total_sum * (1 + float(error))
 
     start = time.perf_counter()
-    sets = compare(total_sum, error, parts)
+    sets = compare(total_sum, error, all_weights, req_weights)
     end = time.perf_counter()
 
     output_file = f'results_{datetime.datetime.now()}.txt'
@@ -181,7 +218,8 @@ def main():
     # Open the file for writing
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write(f'Target sum was {total_sum} within {error * 100}% error '
-                   f'({lower_bound} to {upper_bound})\n\n')
+                   f'({lower_bound} to {upper_bound})\n')
+        file.write(f'The following weights were REQUIRED: {str(req_weights)}\n\n')
         # Iterate through the list of sets
         for s in sets:
             # Convert the set to a string and write it to the file
