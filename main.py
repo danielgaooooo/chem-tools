@@ -137,16 +137,13 @@ def check_between_0_and_1(value):
         raise argparse.ArgumentTypeError(f'{value} must be between 0 and 1.')
     return num
 
-def check_positive_floats(value):
+def check_floats(value):
     '''Check if all values in the space-separated list are positive floats.'''
     try:
-        num_list = list(map(float, value.split()))
-        if any(num <= 0 for num in num_list):
-            raise ValueError
-        return num_list
+        return list(map(float, value.split()))
     except ValueError as exc:
         raise argparse.ArgumentTypeError(f'{value} must be a space-separated '
-                                         f'list of positive numbers.') from exc
+                                         f'list of numbers.') from exc
 
 def check_positive_ints(value):
     '''Check if all values in the space-separated list are positive floats.'''
@@ -178,9 +175,9 @@ def parse_file(file_path):
 
         total_sum = check_positive(lines[0])
         error = check_between_0_and_1(lines[1])
-        all_weights = check_positive_floats(lines[2])
+        all_weights = check_floats(lines[2])
         counts = check_positive_ints(lines[3])
-        req_weights = check_positive_floats(lines[4])
+        req_weights = check_floats(lines[4])
 
         if len(all_weights) != len(counts):
             raise argparse.ArgumentTypeError(f'Length of all_weights (line 3) and counts (line 4) must be the same. Current all_weights length: {len(all_weights)}, counts length: {len(counts)}')
